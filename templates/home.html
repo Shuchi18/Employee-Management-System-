@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .nav {
+            margin-bottom: 30px;
+        }
+        .feature-list {
+            background: #f4f4f4;
+            padding: 20px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="/admin/">Admin</a> | 
+        <a href="/dashboard/">Dashboard</a> | 
+        <a href="/swagger/">API Docs</a>
+    </div>
+    
+    <h1>{{ welcome_message }}</h1>
+    
+    <div class="feature-list">
+        <h3>Key Features:</h3>
+        <ul>
+            {% for feature in features %}
+            <li>{{ feature }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    
+    <h3>Quick Links:</h3>
+    <p>
+        <a href="/api/employees/" class="button">Employee API</a> |
+        <a href="/api/attendance/" class="button">Attendance API</a>
+    </p>
+</body>
+</html>

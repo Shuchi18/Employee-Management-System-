@@ -164,6 +164,7 @@ http://localhost:8000/dashboard/
 ---
 
 ## Project Structure
+```text
 employee_project/
 ├── employees/          # Core employee management
 ├── attendance/         # Time tracking system

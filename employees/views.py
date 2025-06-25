@@ -8,6 +8,7 @@ from attendance.models import Attendance
 from collections import defaultdict
 from datetime import datetime
 import json
+from django.views.generic import TemplateView
 
 
 class DepartmentViewSet(viewsets.ModelViewSet):
@@ -58,3 +59,17 @@ class DashboardView(View):
             'attendance_data_json': json.dumps(monthly_attendance)
         }
         return render(request, 'dashboard.html', context)
+
+
+class HomePageView(TemplateView):
+    template_name = 'home.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['welcome_message'] = "Employee Management System"
+        context['features'] = [
+            "Track employee records",
+            "Manage attendance",
+            "View performance metrics"
+        ]
+        return context

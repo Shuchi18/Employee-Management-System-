@@ -27,6 +27,8 @@ from attendance.views import AttendanceViewSet, PerformanceViewSet
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from employees.views import DashboardView
 
+from employees.views import HomePageView
+
 router = DefaultRouter()
 router.register(r'departments', DepartmentViewSet)
 router.register(r'employees', EmployeeViewSet)
@@ -59,4 +61,5 @@ urlpatterns = [
          schema_view.with_ui('redoc', cache_timeout=0),
          name='schema-redoc'),
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
+    path('', HomePageView.as_view(), name='home'),
 ]
