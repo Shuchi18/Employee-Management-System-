@@ -25,6 +25,7 @@ from employees.views import EmployeeViewSet, DepartmentViewSet
 from attendance.views import AttendanceViewSet, PerformanceViewSet
 
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from employees.views import DashboardView
 
 router = DefaultRouter()
 router.register(r'departments', DepartmentViewSet)
@@ -47,7 +48,7 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    
+
     re_path(r'^swagger(?P<format>\.json|\.yaml)$',
             schema_view.without_ui(cache_timeout=0),
             name='schema-json'),
@@ -57,4 +58,5 @@ urlpatterns = [
     path('redoc/',
          schema_view.with_ui('redoc', cache_timeout=0),
          name='schema-redoc'),
+    path('dashboard/', DashboardView.as_view(), name='dashboard'),
 ]

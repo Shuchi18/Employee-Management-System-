@@ -74,7 +74,7 @@ ROOT_URLCONF = 'employee_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -167,3 +167,11 @@ SWAGGER_SETTINGS = {
     },
     'USE_SESSION_AUTH': False,
 }
+
+TEST = {
+    'NAME': 'employeedb', 
+    'CHARSET': 'UTF8',
+    'COLLATION': 'utf8_general_ci',
+}
+
+SWAGGER_USE_COMPAT_RENDERERS = False

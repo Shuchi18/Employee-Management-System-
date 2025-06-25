@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Analytics Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .dashboard-header h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .dashboard-header p {
+            color: #666;
+            font-size: 16px;
+        }
+        .charts-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .chart-container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 45%;
+            min-width: 400px;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                width: 100%;
+                min-width: unset;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-header">
+        <h1>Employee Analytics Dashboard</h1>
+        <p>Overview of employee distribution and attendance statistics</p>
+    </div>
+    
+    <div class="charts-container">
+        <div class="chart-container">
+            <canvas id="deptChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="attendanceChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        // Parse JSON data from Django
+        var deptData = JSON.parse('{{ dept_data_json|escapejs }}');
+        var attendanceData = JSON.parse('{{ attendance_data_json|escapejs }}');
+        
+        // Extract labels and values
+        var deptLabels = Object.keys(deptData);
+        var deptValues = Object.values(deptData);
+        var attendanceLabels = Object.keys(attendanceData);
+        var attendanceValues = Object.values(attendanceData);
+
+        // Chart 1: Employees by Department
+        new Chart(
+            document.getElementById('deptChart'),
+            {
+                type: 'pie',
+                data: {
+                    labels: deptLabels,
+                    datasets: [{
+                        data: deptValues,
+                        backgroundColor: [
+                            '#FF6384', '#36A2EB', '#FFCE56', 
+                            '#4BC0C0', '#9966FF'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Employees by Department'
+                        }
+                    }
+                }
+            }
+        );
+
+        // Chart 2: Monthly Attendance
+        new Chart(
+            document.getElementById('attendanceChart'),
+            {
+                type: 'bar',
+                data: {
+                    labels: attendanceLabels,
+                    datasets: [{
+                        label: 'Present Employees',
+                        data: attendanceValues,
+                        backgroundColor: '#36A2EB'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Monthly Attendance (Last 6 Months)'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            }
+        );
+    </script>
+</body>
+</html>

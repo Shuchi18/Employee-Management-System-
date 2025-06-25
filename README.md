@@ -1,75 +1,126 @@
-# Employee-Management-System
+# 📊 Employee Management System
 
-# Employee Management System
-
-A Django-based system with REST APIs for managing employee data, departments, attendance, and performance metrics.
-
-## 📌 Project Status
-
-| Task                  | Status      |
-|-----------------------|-------------|
-| Models                | ✅ Completed |
-| Database Setup        | ✅ Completed |
-| API Development       | ✅ Completed |
-| Authentication        | ✅ Completed |
-| Swagger Documentation | ✅ Completed |
-| Visualization         | ⏳ Pending   |
-| Docker Setup          | ⏳ Pending   |
-| Deployment            | ⏳ Pending   |
+_A Django REST API for managing employee data with JWT authentication and Swagger documentation._
 
 ---
 
-## 🛠️ Technical Stack
-- **Backend**: Django 4.x + Django REST Framework
-- **Database**: PostgreSQL
-- **Auth**: JWT (SimpleJWT)
-- **Docs**: Swagger UI (drf-yasg)
-- **Visualization**: Chart.js (optional)
+## 🌟 Project Overview
+
+A full-featured employee management system that includes:
+- **Employee/department tracking** with relational databases
+- **Attendance & performance records**
+- **Secure REST APIs** with JWT authentication
+- **Interactive documentation** via Swagger UI
+- **Data visualization** (optional charts)
+
+**Tech Stack**: Django 4 | PostgreSQL | DRF | SimpleJWT | drf-yasg | Chart.js
 
 ---
 
-## ✅ Completed Features
+## 🛠️ Setup Instructions
 
-### 1. Models
-- **Employee**
-  - Name, Email, Phone, Address, Date Joined, Department (FK)
-- **Department**
-  - Department Name
-- **Attendance**
-  - Employee (FK), Date, Status (Present/Absent/Late)
-- **Performance** 
-  - Employee (FK), Rating (1-5), Review Date
+### Prerequisites
+- Python 3.10+
+- PostgreSQL 14+
+- Node.js (for charts, optional)
 
-### 2. Database
-- PostgreSQL configured via `.env`
-- Fake data seeding for:
-  - 50+ employees
-  - 5 departments 
-  - 90 days of attendance records
-  - Performance reviews
+### 1. Clone Repository
+```bash
+git clone https://github.com/your-repo/employee-management.git
+cd employee-management
+```
 
-### 3. APIs (DRF)
-- **CRUD Endpoints**:
-  - `GET/POST/PUT/DELETE /api/employees/`
-  - `GET/POST/PUT/DELETE /api/departments/`
-  - `GET/POST/PUT/DELETE /api/attendance/`
-  - `GET/POST/PUT/DELETE /api/performance/`
-- **Features**:
-  - JWT Authentication
-  - Filtering (department, date ranges)
-  - Pagination
+### 2. Configure Environment
+```bash
+cp .env.example .env
+```
+Edit `.env` with your:
+```ini
+DATABASE_URL=postgres://user:password@localhost:5432/employeedb
+SECRET_KEY=your-django-secret-key
+```
 
-### 4. Swagger Docs
-- Interactive API explorer at `/swagger/`
-- Auto-generated from docstrings
-- JWT token support
+### 3. Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Database Setup
+```bash
+python manage.py migrate
+python manage.py seed_data  # Optional: Loads 50 fake records
+```
+
+### 5. Run Development Server
+```bash
+python manage.py runserver
+```
+Access at: [http://localhost:8000](http://localhost:8000)
 
 ---
 
-## ⏳ Remaining Tasks
+## 🔌 API Usage Guide
 
-### 1. Visualization (Optional)
-- **Charts Needed**:
-  ```python
-  - Employees per Department (Pie Chart)
-  - Monthly Attendance Trends (Bar Chart)
+### Authentication
+
+1. Get JWT tokens:
+   ```bash
+   curl -X POST http://localhost:8000/api/token/ \
+   -H "Content-Type: application/json" \
+   -d '{"username":"admin", "password":"yourpassword"}'
+   ```
+
+   Response:
+   ```json
+   {
+     "refresh": "xxxxx",
+     "access": "xxxxx"
+   }
+   ```
+
+2. Use in requests:
+   ```bash
+   curl -H "Authorization: Bearer xxx.yyy.zzz" \
+   http://localhost:8000/api/employees/
+   ```
+
+### Key Endpoints
+
+| Endpoint                | Methods | Description                     |
+|-------------------------|---------|---------------------------------|
+| `/api/employees/`       | GET,POST| List/create employees           |
+| `/api/employees/{id}/`  | ALL     | Manage specific employee        |
+| `/api/attendance/`      | GET,POST| Filterable attendance records   |
+| `/api/performance/`     | GET,POST| Employee performance reviews    |
+
+### Filtering Examples
+
+```http
+GET /api/employees/?department=1
+GET /api/attendance/?date__gte=2025-01-01&status=P
+```
+
+---
+
+## 📚 Documentation
+
+**Interactive API Explorer**:  
+[http://localhost:8000/swagger/](http://localhost:8000/swagger/)
+
+![Swagger UI Preview](https://i.imgur.com/JQ8W5Vp.png)
+
+---
+
+## 🚀 Deployment
+
+### Docker (Recommended)
+```bash
+docker-compose up -d
+```
+Access: [http://localhost:8001](http://localhost:8001)
+
+### Cloud Platforms
+
+[![Deploy on Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
+
+---
