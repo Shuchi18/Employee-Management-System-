@@ -1,42 +1,68 @@
-# 📊 Employee Management System
+# Employee Management System
 
-_A Django REST API for managing employee data with JWT authentication and Swagger documentation._
-
----
-
-## 🌟 Project Overview
-
-A full-featured employee management system that includes:
-- **Employee/department tracking** with relational databases
-- **Attendance & performance records**
-- **Secure REST APIs** with JWT authentication
-- **Interactive documentation** via Swagger UI
-- **Data visualization** (optional charts)
-
-**Tech Stack**: Django 4 | PostgreSQL | DRF | SimpleJWT | drf-yasg | Chart.js
+_A complete HR management solution with APIs, analytics dashboard, and secure access control._
 
 ---
 
-## 🛠️ Setup Instructions
+## Project Overview
+
+### Core Features
+- **Employee lifecycle management**
+  - Department assignment
+  - Employment status tracking
+  - Contact information storage
+- **Time & Attendance**
+  - Daily status tracking (Present/Absent/Late)
+  - Monthly attendance analytics
+- **Performance Management**
+  - Quarterly reviews with ratings
+  - Manager comments system
+- **Data Visualization**
+  - Interactive department distribution charts
+  - Historical attendance trends
+
+### Technical Highlights
+- **Secure REST API** with JWT authentication
+- **Auto-generated documentation** via Swagger/OpenAPI
+- **PostgreSQL** database with Faker data seeding
+- **Responsive dashboard** with Chart.js visualizations
+
+**Tech Stack**: 
+- Backend: Django 4, Django REST Framework
+- Database: PostgreSQL
+- Auth: JWT (SimpleJWT)
+- Docs: drf-yasg
+- Visualization: Chart.js
+
+---
+
+## Setup Instructions
 
 ### Prerequisites
 - Python 3.10+
 - PostgreSQL 14+
-- Node.js (for charts, optional)
+- Node.js 16+ (for chart rendering)
+- Git
 
-### 1. Clone Repository
+### 1. Initial Setup
 ```bash
+# Clone repository
 git clone https://github.com/your-repo/employee-management.git
 cd employee-management
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+# venv\Scripts\activate   # Windows
 ```
 
 ### 2. Configure Environment
 ```bash
 cp .env.example .env
 ```
+
 Edit `.env` with your:
 ```ini
-DATABASE_URL=postgres://user:password@localhost:5432/employeedb
 SECRET_KEY=your-django-secret-key
 ```
 
@@ -48,18 +74,21 @@ pip install -r requirements.txt
 ### 4. Database Setup
 ```bash
 python manage.py migrate
-python manage.py seed_data  # Optional: Loads 50 fake records
+python manage.py seed_data  
 ```
 
 ### 5. Run Development Server
 ```bash
 python manage.py runserver
 ```
-Access at: [http://localhost:8000](http://localhost:8000)
+Access endpoints:
+ - API: http://localhost:8000/api/
+ - Admin: http://localhost:8000/admin/
+ - Dashboard: http://localhost:8000/dashboard/
 
 ---
 
-## 🔌 API Usage Guide
+## API Usage Guide
 
 ### Authentication
 
@@ -86,41 +115,59 @@ Access at: [http://localhost:8000](http://localhost:8000)
 
 ### Key Endpoints
 
-| Endpoint                | Methods | Description                     |
-|-------------------------|---------|---------------------------------|
-| `/api/employees/`       | GET,POST| List/create employees           |
-| `/api/employees/{id}/`  | ALL     | Manage specific employee        |
-| `/api/attendance/`      | GET,POST| Filterable attendance records   |
-| `/api/performance/`     | GET,POST| Employee performance reviews    |
+| Endpoint                | Description                     |
+|-------------------------|---------------------------------|
+| `/api/employees/`       | Filter by department, status    |
+| `/api/employees/{id}/`  | Name-based search               |
+| `/api/attendance/`      | Date range filtering            |
+| `/api/performance/`     | Rating-based sorting            |
 
-### Filtering Examples
+### Example Queries
 
 ```http
-GET /api/employees/?department=1
-GET /api/attendance/?date__gte=2025-01-01&status=P
+GET /api/employees/?department=Engineering&employment_status=FT
+GET /api/attendance/?date__year=2025&date__month=6
+GET /api/performance/?rating__gte=3&ordering=-review_date
 ```
 
 ---
 
-## 📚 Documentation
+## Dashboard Features
+### Acesss
+http://localhost:8000/dashboard/
 
-**Interactive API Explorer**:  
-[http://localhost:8000/swagger/](http://localhost:8000/swagger/)
+### Visualization Components
+#### 1. Department Distribution
+ - Real-time employee count by department
+ - Interactive pie chart with hover details
+#### 2. Attendance Analytics
+ - Monthly present/absent trends
+ - Configurable date ranges (last 6/12 months)
 
-![Swagger UI Preview](https://i.imgur.com/JQ8W5Vp.png)
+### Usage Tips
+- Click chart legends to toggle data sets
+- Hover over chart elements for detailed counts
+- Refresh page to load latest data
+
+---
+
+## Documentation
+### Interactive API Docs
+- Swagger UI: http://localhost:8000/swagger/
+- ReDoc: http://localhost:8000/redoc/
 
 ---
 
-## 🚀 Deployment
-
-### Docker (Recommended)
-```bash
-docker-compose up -d
-```
-Access: [http://localhost:8001](http://localhost:8001)
-
-### Cloud Platforms
-
-[![Deploy on Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
+## Deployment
+### TODO
 
 ---
+
+## Project Structure
+employee_project/
+├── employees/          # Core employee management
+├── attendance/         # Time tracking system
+├── employee_project/   # Configuration
+├── templates/          # Dashboard views
+├── tests/              # Unit and integration tests
+└── management/         # Data seeding commands
