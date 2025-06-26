@@ -1,5 +1,3 @@
-# employees/tests/test_auth.py
-
 import pytest
 from rest_framework.test import APIClient
 

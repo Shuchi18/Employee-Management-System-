@@ -12,7 +12,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         fake = Faker()
 
-        # Clear existing data (optional)
+        # Clear existing data
         Department.objects.all().delete()
         Employee.objects.all().delete()
         Attendance.objects.all().delete()
@@ -27,7 +27,7 @@ class Command(BaseCommand):
 
         # 2. Create Employees (30-50 records)
         depts = list(Department.objects.all())
-        for _ in range(40):  # Adjust count as needed
+        for _ in range(40):
             Employee.objects.create(
                 name=fake.name(),
                 email=fake.unique.email(),
@@ -43,11 +43,10 @@ class Command(BaseCommand):
         # 3. Create Attendance Records (3 months of data)
         employees = Employee.objects.all()
         for employee in employees:
-            for day in range(90):  # 90 days back
+            for day in range(90):  #
                 date = datetime.now().date() - timedelta(days=day)
                 status = random.choices(
                     ['P', 'A', 'L'],
-                    # 80% Present, 15% Absent, 5% Late
                     weights=[0.8, 0.15, 0.05],
                     k=1
                 )[0]
@@ -60,7 +59,7 @@ class Command(BaseCommand):
 
         # 4. Create Performance Reviews (1 per employee per year)
         for employee in employees:
-            for year in range(1, 4):  # Last 3 years
+            for year in range(1, 4):
                 Performance.objects.create(
                     employee=employee,
                     rating=random.randint(1, 5),

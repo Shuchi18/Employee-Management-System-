@@ -29,7 +29,7 @@ class DashboardView(View):
         dept_data = {}
         for dept in Department.objects.all():
             count = Employee.objects.filter(department=dept).count()
-            if count > 0:  # Only include departments with employees
+            if count > 0:
                 dept_data[dept.name] = count
 
         # Chart 2: Monthly Attendance (last 6 months)
@@ -43,8 +43,9 @@ class DashboardView(View):
                 else:
                     target_month = 12 + (current_date.month - month)
                     target_year = current_date.year - 1
-                    
-                month_name = datetime(target_year, target_month, 1).strftime("%b %Y")
+
+                month_name = datetime(
+                    target_year, target_month, 1).strftime("%b %Y")
                 count = Attendance.objects.filter(
                     date__month=target_month,
                     date__year=target_year,

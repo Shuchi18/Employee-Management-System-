@@ -18,7 +18,6 @@ from datetime import timedelta
 # environ.Env.read_env()
 
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -162,14 +161,14 @@ SWAGGER_SETTINGS = {
             'type': 'apiKey',
             'in': 'header',
             'name': 'Authorization',
-            'in' : 'header',
+            'in': 'header',
         }
     },
     'USE_SESSION_AUTH': False,
 }
 
 TEST = {
-    'NAME': 'employeedb', 
+    'NAME': 'employeedb',
     'CHARSET': 'UTF8',
     'COLLATION': 'utf8_general_ci',
 }
